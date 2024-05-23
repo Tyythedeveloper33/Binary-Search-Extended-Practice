@@ -84,39 +84,57 @@ function getHeight(rootNode) {
     return 0
   }
 
-
-
-  return 1 + Math.max(getHeight(rootNode.left), getHeight(rootNode.right))
+  let counter1 = 1 + getHeight(rootNode.left)
+  let counter2 = 1 + getHeight(rootNode.right)
+  return Math.max(counter1, counter2)
 
 }
 
 function balancedTree(rootNode) {
-  debugger
+   
   let queue = [rootNode]
 
 
-while(queue.length){
-  let node = queue.shift()
+  while (queue.length) {
+    let node = queue.shift()
 
-  let leftHeight = getHeight(node.left)
-  // console.log(leftHeight)
-  let rightHeight = getHeight(node.right)
-  // console.log(rightHeight)
-  // console.log(leftHeight - rightHeight)
+    let leftHeight = getHeight(node.left)
+    let rightHeight = getHeight(node.right)
 
-if (Math.abs(leftHeight - rightHeight) <= 1) {
-  if(node.left) queue.push(node.left)
-  if(node.right) queue.push(node.right)
 
-} else{
-  return false
-}
-}
- return true
+    if (Math.abs(leftHeight - rightHeight) <= 1) {
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
+
+    } else {
+      return false
+    }
+  }
+  return true
 }
 
 function countNodes(rootNode) {
   // Your code here
+  if (!rootNode) return null
+  let counter = 0
+  let stack = [rootNode]
+
+  while (stack.length > 0) {
+
+    let node = stack.pop()
+    counter++
+    // console.log(node.val)
+
+
+    if (node.left) {
+      stack.push(node.left)
+    }
+    if (node.right) {
+      stack.push(node.right)
+    }
+  }
+
+  return counter
 }
 
 function getParentNode(rootNode, target) {
