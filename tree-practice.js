@@ -91,7 +91,7 @@ function getHeight(rootNode) {
 }
 
 function balancedTree(rootNode) {
-   
+
   let queue = [rootNode]
 
 
@@ -139,10 +139,65 @@ function countNodes(rootNode) {
 
 function getParentNode(rootNode, target) {
   // Your code here
-}
+  if (!rootNode || rootNode.val === target) return null
 
+
+  let queue = [rootNode]
+
+
+  while (queue.length > 0) {
+    let node = queue.shift()
+    console.log(node.val)
+
+
+    if (node.left) {
+      if (node.left.val === target) return node
+      queue.push(node.left)
+    }
+    if (node.right) {
+      if (node.right.val === target) return node
+      queue.push(node.right)
+    }
+  }
+  //return undefined
+  // if no target is found
+  return undefined
+
+}
+       //   4
+    //    /   \
+    //   2     6
+    //  / \   / \
+    // 1   3 5   7
+    
+// stack =>[]
+// target = 4
+// curr = 3
+//prev = 2
 function inOrderPredecessor(rootNode, target) {
   // Your code here
+  let stack = []
+  let curr = rootNode
+  let prev = null
+
+  while (stack.length > 0 || curr !== null) {
+
+    while (curr !== null) {
+    stack.push(curr)
+    curr = curr.left
+    }
+
+    curr = stack.pop()
+    if(curr.val === target) {
+        if(prev === null) return null
+
+        return prev.val
+    }
+    prev = curr
+    curr = curr.right
+    }
+
+    return null
 }
 
 function deleteNodeBST(rootNode, target) {
